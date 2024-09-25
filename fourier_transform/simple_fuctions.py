@@ -21,16 +21,22 @@ def dft(y):
     return c
 
 def square_wave(N, n):
-    if n > N/2:
+    if n >= N/2:
        return  -1
     return 1
+
+def sawtooth(N, n):
+    if n >= N/2:
+       return  n - N/2
+    return n
 
 def create_y(N):
     y = zeros(N)
     for n in range(N):
         # y[n] = square_wave(N, n) # exec. 7.1 a
-        # y[n] = n # exec. 7.1 b
+        # y[n] = sawtooth(N, n) # exec. 7.1 b
         y[n] = np.sin(pi*n/N)*np.sin(20*pi*n/N) # exec. 7.1 c
+        # y[n] = np.sin(2.5*pi*n/N)
     return y
 
 if __name__ == '__main__':
@@ -42,5 +48,6 @@ if __name__ == '__main__':
     ax.scatter(range(N), y, marker='o', s=5)
     plt.show()
     fig, ax = plt.subplots()
+    # ax.set_yscale('log')
     ax.scatter(range(num_coef(N)), abs(c), marker='o', s=5)
     plt.show()

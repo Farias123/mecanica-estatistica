@@ -17,9 +17,10 @@ def main():
     ax.set_yticks(np.arange(min(spots), max(spots), 10))
     plt.show()
 
-    c = dft(months)
+    c = dft(spots)
     fig, ax = plt.subplots()
     ax.scatter(range(num_coef(len(months))), abs(c)**2, marker='o', s=1) # todo apenas um pico
+    # ax.set_yscale('log')
     plt.show()
 
 if __name__ == '__main__':
