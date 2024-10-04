@@ -1,6 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
-from simple_fuctions import dft, num_coef
+from simple_fuctions_7_1 import dft, num_coef
 
 
 def main():

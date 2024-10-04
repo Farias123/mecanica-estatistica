@@ -12,8 +12,8 @@ if __name__ == '__main__':
 
     for datafile in files:
         y = import_data(datafile)
-        # y = y[:10000]
         c = np.fft.rfft(y)
+        c = c[:10000]
 
         fig, ax = plt.subplots()
         # ax.scatter(range(len(y)), y, s=2)
