@@ -4,7 +4,7 @@ from simple_fuctions import dft, num_coef
 
 
 def main():
-    with open('sunspots.txt', 'r') as file:
+    with open('data_files/sunspots.txt', 'r') as file:
         content = file.read()
 
     data = [x.split('\t') for x in content.split('\n')]
