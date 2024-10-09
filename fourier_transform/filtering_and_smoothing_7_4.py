@@ -8,8 +8,8 @@ def import_data(filename):
         content = file.read()
     return np.array(content.split('\n'), float)
 
-def make_new_c(c):
-    index_to_zero = len(c) * 0.02
+def make_new_c(c, not_zero_percentage=0.10):
+    index_to_zero = len(c) * not_zero_percentage
     new_c = np.zeros(len(c), complex)
     for i in range(len(c)):
         if i > index_to_zero:
