@@ -12,9 +12,7 @@ def make_new_c(c, not_zero_percentage=0.10):
     index_to_zero = len(c) * not_zero_percentage
     new_c = np.zeros(len(c), complex)
     for i in range(len(c)):
-        if i > index_to_zero:
-            new_c[i] = 0
-        else:
+        if i < index_to_zero:
             new_c[i] = c[i]
     return new_c
 
@@ -23,12 +21,12 @@ def main():
     y = import_data(datafile)
 
     c = np.fft.rfft(y)
-    new_c = make_new_c(c)
+    new_c = make_new_c(c, not_zero_percentage=0.02)
     new_y = np.fft.irfft(new_c)
 
     fig, ax = plt.subplots()
     ax.scatter(range(len(y)), y, s=2, label='original data')
-    ax.scatter(range(len(new_y)), y, s=2, label='modified c')
+    ax.scatter(range(len(new_y)), new_y, s=2, label='modified data')
 
     # ax.scatter(range(len(c)), abs(c), s=2, label='original data')
     # ax.scatter(range(len(new_c)), abs(new_c), s=2, label='modified c')

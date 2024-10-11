@@ -9,20 +9,21 @@ from fourier_transform.simple_fuctions_7_1 import num_coef
 def dft(y):
     # transformada de fourier discreta
     N = len(y)
-    c = zeros(num_coef(N), complex)
-    for k in range(num_coef(N)):
+    K = num_coef(N)
+    c = zeros(K, complex)
+    for k in range(K):
         for n in range(N):
             c[k] += y[n]*exp(-2j*k*pi*n/N)
 
     return c
 
 def idft(c, N):
-    y = zeros(N, complex)
-
+    y = zeros(N, float)
+    K = num_coef(N)
     for n in range(N):
-        for k in range(num_coef(N)):
+        for k in range(K):
             y[n] += c[k]*exp(2j*k*pi*n/N)
-        y[n] = y[n]/N
+        y[n] = y[n]/K
 
     return y
 
@@ -47,8 +48,7 @@ if __name__ == '__main__':
     new_c = make_new_c(c)
     new_y = idft(new_c, N)
     fig, ax = plt.subplots()
-    # ax.set_yscale('log')
     ax.scatter(range(N), y, marker='o', s=5, label='original_y')
-    # Problema com plotagem de complexos
     ax.scatter(range(N), new_y, marker='o', s=5, label='smoothed_y')
+    ax.legend()
     plt.show()
