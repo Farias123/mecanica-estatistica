@@ -1,7 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from cmath import pi, exp
-from numpy import zeros
 
 
 def num_coef(y_len):
@@ -13,7 +12,7 @@ def num_coef(y_len):
 def dft(y):
     # transformada de fourier discreta
     N = len(y)
-    c = zeros(num_coef(N), complex)
+    c = np.zeros(num_coef(N), complex)
     for k in range(num_coef(N)):
         for n in range(N):
             c[k] += y[n]*exp(-2j*k*pi*n/N)
@@ -31,7 +30,7 @@ def sawtooth(N, n):
     return n
 
 def create_y(N):
-    y = zeros(N)
+    y = np.zeros(N)
     for n in range(N):
         # y[n] = square_wave(N, n) # exec. 7.1 a
         # y[n] = sawtooth(N, n) # exec. 7.1 b
