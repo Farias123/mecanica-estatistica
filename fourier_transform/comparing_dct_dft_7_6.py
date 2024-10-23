@@ -47,6 +47,28 @@ def idft(c, N):
 
     return y
 
+
+def dct(y):
+    N = len(y)
+    y2 = np.empty(2*N,float)
+    y2[:N] = y[:]
+    y2[N:] = y[::-1]
+
+    c = np.fft.rfft(y2)
+    phi = np.exp(-1j*pi*np.arange(N)/(2*N))
+    return np.real(phi*c[:N])
+
+
+def idct(a):
+    N = len(a)
+    c = np.empty(N+1,complex)
+
+    phi = np.exp(1j*pi*np.arange(N)/(2*N))
+    c[:N] = phi*a
+    c[N] = 0.0
+    return np.fft.irfft(c)[:N]
+
+
 if __name__ == '__main__':
     y = import_data('data_files/dow2.txt')
     N = len(y)
@@ -55,11 +77,24 @@ if __name__ == '__main__':
     # TODO idft estranha
     new_y = idft(new_c, N)
     new_y_np = np.fft.irfft(new_c)
+
     fig, ax = plt.subplots()
     ax.scatter(range(len(y)), y, s=2, label='original data')
     ax.scatter(range(len(new_y)), new_y, s=2, label='modified data')
     ax.scatter(range(len(new_y_np)), new_y_np, s=2, label='modified data numpy')
 
     fig.legend()
-    ax.set_title('dow2')
+    ax.set_title('discrete fourier transform')
+    plt.show()
+
+    cos_transform_c = dct(y)
+    new_c = make_new_c(cos_transform_c, not_zero_percentage=0.02)
+    new_y = idct(new_c)
+
+    fig, ax = plt.subplots()
+    ax.scatter(range(len(y)), y, s=2, label='original data')
+    ax.scatter(range(len(new_y)), new_y, s=2, label='modified data')
+
+    fig.legend()
+    ax.set_title('discrete fourier cosine transform')
     plt.show()
