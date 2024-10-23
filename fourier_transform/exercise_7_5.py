@@ -25,7 +25,7 @@ def idft(c, N):
     for n in range(N):
         for k in range(K):
             y[n] += c[k]*exp(2j*k*pi*n/N)
-        y[n] = y[n]/K
+        y[n] = 2*y[n]/N
 
     return y
 
@@ -47,19 +47,12 @@ if __name__ == '__main__':
     N = 1000
     y = create_f(N)
     c = dft(y)
+
     new_c = make_new_c(c)
     new_y = idft(new_c, N)
     fig, ax = plt.subplots()
     ax.set_title('My inverse fourier transform')
     ax.scatter(range(N), y, marker='o', s=5, label='original_y')
     ax.scatter(range(N), new_y, marker='o', s=5, label='smoothed_y')
-    ax.legend()
-    plt.show()
-
-    new_y_np = np.fft.irfft(new_c, N)
-    fig, ax = plt.subplots()
-    ax.set_title('Numpy')
-    ax.scatter(range(N), y, marker='o', s=5, label='original_y')
-    ax.scatter(range(N), new_y_np, marker='o', s=5, label='smoothed_y')
     ax.legend()
     plt.show()

@@ -43,7 +43,7 @@ def idft(c, N):
     for n in range(N):
         for k in range(K):
             y[n] += c[k] * exp(2j * k * pi * n / N)
-        y[n] = y[n] / K
+        y[n] = 2*y[n] / N
 
     return y
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     y = import_data('data_files/dow2.txt')
     N = len(y)
     c = dft(y)
-    new_c = make_new_c(c, not_zero_percentage=0.02)
+    new_c = make_new_c(c, not_zero_percentage=1.00)
     # TODO idft estranha
     new_y = idft(new_c, N)
     new_y_np = np.fft.irfft(new_c)
