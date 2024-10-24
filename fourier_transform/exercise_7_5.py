@@ -1,6 +1,5 @@
 import numpy as np
 from matplotlib import pyplot as plt
-from cmath import pi, exp
 
 from fourier_transform.filtering_and_smoothing_7_4 import make_new_c
 from fourier_transform.simple_fuctions_7_1 import num_coef
@@ -13,7 +12,7 @@ def dft(y):
 
     for k in range(K):
         for n in range(N):
-            c[k] += y[n]*exp(-2j*k*pi*n/N)
+            c[k] += y[n]*np.exp(-2j*k*np.pi*n/N)
 
     return c
 
@@ -21,11 +20,15 @@ def idft(c, N):
     #transformada inversa de fourier discreta
     y = np.zeros(N, float)
     K = num_coef(N)
+    full_c = np.zeros(N, complex)
+    full_c[:K] = c
+    for i in range(1, K):
+        full_c[N-i] = np.conjugate(full_c[i])
 
     for n in range(N):
-        for k in range(K):
-            y[n] += c[k]*exp(2j*k*pi*n/N)
-        y[n] = 2*y[n]/N
+        for k in range(N):
+            y[n] += full_c[k]*np.exp(2j*k*np.pi*n/N)
+        y[n] = y[n]/N
 
     return y
 

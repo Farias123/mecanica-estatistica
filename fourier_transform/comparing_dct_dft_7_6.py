@@ -30,20 +30,24 @@ def dft(y):
 
     for k in range(K):
         for n in range(N):
-            c[k] += y[n] * exp(-2j * k * pi * n / N)
+            c[k] += y[n]*np.exp(-2j*k*np.pi*n/N)
 
     return c
 
 
 def idft(c, N):
-    # transformada inversa de fourier discreta
-    y = np.zeros(N)
-    K = num_coef(N)
+    #transformada inversa de fourier discreta
+    y = np.zeros(N, float)
+    K = len(c)
+    full_c = np.zeros(N, complex)
+    full_c[:K] = c
+    for i in range(1, K):
+        full_c[N-i] = np.conjugate(full_c[i])
 
     for n in range(N):
-        for k in range(K):
-            y[n] += c[k] * exp(2j * k * pi * n / N)
-        y[n] = 2*y[n] / N
+        for k in range(N):
+            y[n] += full_c[k]*np.exp(2j*k*np.pi*n/N)
+        y[n] = y[n]/N
 
     return y
 
@@ -73,8 +77,7 @@ if __name__ == '__main__':
     y = import_data('data_files/dow2.txt')
     N = len(y)
     c = dft(y)
-    new_c = make_new_c(c, not_zero_percentage=1.00)
-    # TODO idft estranha
+    new_c = make_new_c(c, not_zero_percentage=0.02)
     new_y = idft(new_c, N)
     new_y_np = np.fft.irfft(new_c)
 
